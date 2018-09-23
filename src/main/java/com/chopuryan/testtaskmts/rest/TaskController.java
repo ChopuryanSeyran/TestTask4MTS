@@ -12,16 +12,19 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 public class TaskController {
 
-    @Autowired
-    private TaskService TaskService;
+    private final TaskService taskService;
 
+    @Autowired
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @RequestMapping(path = "/task", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(ACCEPTED)
     @ResponseBody
     public String createTask() {
-        return TaskService.createTask();
+        return taskService.createTask();
     }
 
     @RequestMapping(path = "/task/{id}", method = RequestMethod.GET,
@@ -29,6 +32,6 @@ public class TaskController {
     @ResponseStatus(OK)
     @ResponseBody
     public Status getTask(@PathVariable String id) throws Exception {
-        return TaskService.getTask(id);
+        return taskService.getTask(id);
     }
 }

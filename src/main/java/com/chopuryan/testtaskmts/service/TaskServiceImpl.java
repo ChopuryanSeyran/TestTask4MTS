@@ -9,19 +9,22 @@ import com.chopuryan.testtaskmts.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import static com.chopuryan.testtaskmts.Constants.DATE_FORMAT;
+
 @Service
 public class TaskServiceImpl implements TaskService {
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    private final TaskRepository repository;
 
     @Autowired
-    private TaskRepository repository;
+    public TaskServiceImpl(TaskRepository repository) {
+        this.repository = repository;
+    }
 
     public String createTask() {
         String uuid = UUID.randomUUID().toString();
@@ -50,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
         return uuid;
     }
 
-    public Status getTask(String id) throws Exception {
+    public Status getTask(String id) {
         try {
             UUID.fromString(id);
             TaskEntity task = repository.findOne(id);
@@ -59,7 +62,7 @@ public class TaskServiceImpl implements TaskService {
             }
             Status status = new Status();
             status.setStatus(task.getStatus());
-            status.setTimestamp(dateFormat.format(task.getTimestamp()));
+            status.setTimestamp(new SimpleDateFormat(DATE_FORMAT).format(task.getTimestamp()));
             return status;
         } catch (IllegalArgumentException e) {
             throw new WrongUuidException();
