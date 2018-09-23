@@ -17,6 +17,7 @@
         <java.version>1.8</java.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
     </properties>
 
     <dependencies>
@@ -47,6 +48,16 @@
             <artifactId>commons-collections</artifactId>
             <version>${commons-collections.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger-ui.version}</version>
         </dependency>
     </dependencies>
 

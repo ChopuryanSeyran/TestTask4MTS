@@ -74,6 +74,7 @@ public class TaskIntegrationTest {
         final MvcResult result = mockMvc.perform(get("/task/{id}", taskId))
                 .andExpect(status().isOk())
                 .andReturn();
+        repository.delete(task);
         final String content = result.getResponse().getContentAsString();
         Status status = this.mapper.readValue(content, Status.class);
 
@@ -106,12 +107,13 @@ public class TaskIntegrationTest {
         Assert.assertEquals(task.getStatus(), StatusEnum.CREATED.toString());
         Assert.assertEquals(taskCountAfter.get(), taskCountBefore.get()+1);
 
-        TimeUnit.SECONDS.sleep(30);
+        TimeUnit.MINUTES.sleep(1);
         task = repository.findOne(taskId);
         Assert.assertEquals(task.getStatus(), StatusEnum.RUNNING.toString());
 
         TimeUnit.MINUTES.sleep(2);
         task = repository.findOne(taskId);
         Assert.assertEquals(task.getStatus(), StatusEnum.FINISHED.toString());
+        repository.delete(task);
     }
 }
