@@ -28,7 +28,7 @@ public class TaskController {
     }
 
     @RequestMapping(path = "/task", method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(ACCEPTED)
     @ResponseBody
     @ApiOperation("Create task")
